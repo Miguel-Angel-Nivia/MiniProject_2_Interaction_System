@@ -87,32 +87,32 @@ def playSound(sounds, name, volume, spatialPos, spaceVel, speed, time, loop):
         return
 
     # Load and play the sound file.
-    sonido = sounds[name]
+    sound = sounds[name]
     # Sound settings.
-    sonido.set_gain(volume)
-    sonido.set_position((spatialPos[0], spatialPos[1], spatialPos[2]))
-    sonido.set_velocity((spaceVel[0], spaceVel[1], spaceVel[2]))
-    sonido.set_pitch(speed)
+    sound.set_gain(volume)
+    sound.set_position((spatialPos[0], spatialPos[1], spatialPos[2]))
+    sound.set_velocity((spaceVel[0], spaceVel[1], spaceVel[2]))
+    sound.set_pitch(speed)
     if time != 0:
         time.sleep(time)
     if loop == True:
-        sonido.set_looping(True)
+        sound.set_looping(True)
         # Keep the sound playing in loop until the user presses Enter
-        sonido.play()
+        sound.play()
         try:
             input("\n                         Presiona enter para continuar...                            \n\n")
         finally:
-            sonido.stop()
+            sound.stop()
     else:
-        sonido.play()
+        sound.play()
         # Keep the sound playing.
-        while sonido.get_state() == AL_PLAYING:
+        while sound.get_state() == AL_PLAYING:
             pass
     return 0
 
-def printText(texto, clean):
+def printText(text, clean):
     # Function to display text in cmd with a width of 70.
-    line = textwrap.wrap(texto, width = 80)
+    line = textwrap.wrap(text, width = 80)
     for i in line:
         print(i)
     input("\nPresiona enter para continuar...\n")
