@@ -1,96 +1,107 @@
 from openal import *
 import functions as func
+import os, time
 
 # Principal code
 # By: Miguel Angel Nivia Y Daniel Vasquez
-# Antes de usar el codigo, ejecutar en cmd un pip install requests, pyopenal y ospath.
 
 def main():
     # open OpenAl
     oalInit()
 
-    # Crear un listener (el jugador)
-    listener = Listener()
-    # Colocar el listener en el centro
-    listener.set_position((0, 0, 0))
-    listener.set_velocity((0,0,0))
-    listener.set_orientation((0, 0, -1, 0, 1, 0))
+    # Player
+    player = Listener()
+    player.set_position((0, 0, 0))
 
     sounds = func.obtainingSound()
-    # func.playSound(sounds, "sonidoEmpezar.wav", 1, [0, 0, -1], [0, 0, -1], 1.5, 0, False)
+    startThread = func.playSound(sounds, "sonidoEmpezar.wav", 1, 1.5, [0, 0, -1], [0, 0, -1], 3.5, False, "static")
+    if startThread.is_alive(): sounds["sonidoEmpezar.wav"].stop() and startThread.join()
     # Loading screen
     func.loadingScreen()
-    # func.playSound(sounds, "sonidoInicioMenu.wav", 1, [0, 0, 0], [0, 0, 0], 1, 0, True)
+    menuThread = func.playSound(sounds, "sonidoInicioMenu.wav", 1, 1, [0, 0, 0], [0, 0, 0], 0, True, "static")
+    if menuThread.is_alive():
+        try:
+            input("\n                         Presiona enter para continuar...                            \n\n")
+        finally:
+            sounds["sonidoInicioMenu.wav"].stop() and menuThread.join()
     # Console Cleaning
     os.system('cls')
 
     tiene_pechera = False
 
-    text = "Dios - Frederic es un aventurero común y corriente que hace parte de un grupo de mercenarios, el cual despierta después de una exploración que salió mal, con un fuerte dolor de cabeza."
-    func.printText(text, 1)
-    # func.playSound(sounds, "sonidoViento.wav", 1, [0, 1, 0], [0, 1, 0], 2, 0, False)
-    
-    text = "Frederic - Ahg que.. que paso? ¿Dónde estoy? No veo absolutamente nada, hay un olor a humo, estoy mojado y repleto de lodo."
-    func.printText(text, 0)
-    # func.playSound(sounds, "sonidoGotasCueva.wav", 1, [1, 0, -1], [1, 0, -1], 1, 0, False)
+    text = "Dios - Frederic es un aventurero común y corriente que hace parte de un grupo de mercenarios, donde él despierta después de una exploración que salió mal y con un fuerte dolor de cabeza."
+    WindThread = func.playSound(sounds, "sonidoViento.wav", 1, 2, [0, 1, 0], [0, 1, 0], 0, False, "static")
+    func.playerInteraction(sounds, "continue", text, WindThread, "sonidoViento.wav", 1)
 
+    text = "Frederic - Ahg que.. que paso? ¿Dónde estoy? No veo absolutamente nada, hay un olor a humo, estoy mojado y repleto de lodo."
+    waterdropsThread = func.playSound(sounds, "sonidoGotasCueva.wav", 0.6, 1, [1, 0, 0], [0, 0, 0], 1, True, "static")
+    waterdropsThread2 = func.playSound(sounds, "sonidoGotasCueva2.wav", 0.2, 1, [-1, 0, 0], [0, 0, 0], 1, True, "static")
+    func.printText(text, 0)
+    
     cont = 0
-    while cont < 2:
+    while cont < 1:
         print("¿Qué quieres hacer? \n1. Levantarse \n2. Mirar a tu alrededor")
-        # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-        decision = input(":")
+        decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
+        
         if decision == "1":
             text = "Frederic - ¿Qué es esto? ¿una herida? Mierda tengo una cortada infectada en el abdomen."
-            func.printText(text, 0)
-            # func.playSound(sounds, "sonidoHeridaFrederic.wav", 1, [0, 0, 0], [0, 0, 0], 1, 2, False)
-            cont += 1
+            hurtThread = func.playSound(sounds, "sonidoHeridaFrederic.wav", 1, 1, [0, 0, 0], [0, 0, 0], 0, False, "static")
+            func.playerInteraction(sounds, "continue", text, hurtThread, "sonidoHeridaFrederic.wav", 0)
 
-            print("¿Qué quieres hacer? \n1. Mirar a tu alrededor \n2. Mirar arriba")
-            # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-            decision = input(":")
-            while cont < 2:
-                if decision == "1":
-                    text = "Frederic - Qué carajo no se ve nada alrededor, ¿Uh?… ¿Qué es eso? Algo brilla al fondo."
-                    func.printText(text, 0)
-                    # func.playSound(sounds, "sonidoDudaFrederic.wav", 1, [0, 0, 0], [0, 0, 0], 1, 0, False)
-                    cont += 1
-                elif decision == "2":
-                    cont += 1
+            print("¿Qué quieres hacer? \n1. Inspeccionar cuerpo \n2. Caminar")
+            decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
+            if decision == "1":
+                text = "Frederic - Qué carajo, no se ve nada alrededor, ¿Uh?… ¿Qué es eso? Algo brilla al fondo, mejor voy para allá."
+                doubtThread = func.playSound(sounds, "sonidoDudaFrederic.wav", 0.8, 1, [0, 0, 0], [0, 0, 0], 0, False, "static")
+                func.playerInteraction(sounds, "continue", text, doubtThread, "sonidoDudaFrederic.wav",  0)
+                cont += 1
+            else:
+                cont +=1
 
         elif decision == "2":
             text = "Frederic - Qué carajo no se ve nada alrededor, ¿Uh?… ¿Qué es eso? Algo brilla al fondo."
-            func.printText(text, 0)
-            # func.playSound(sounds, "sonidoDudaFrederic.wav", 1, [0, 0, 0], [0, 0, 0], 1, 0, False)
-            cont += 1
+            doubtThread = func.playSound(sounds, "sonidoDudaFrederic.wav", 0.8, 1, [0, 0, 0], [0, 0, 0], 0, False, "static")
+            func.playerInteraction(sounds, "continue", text, doubtThread, "sonidoDudaFrederic.wav", 0)
 
-            print("¿Qué quieres hacer? \n1. Levantarse \n2. Mirar arriba")
-            # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-            decision = input(":")
-            while cont < 2:
-                if decision == "1":
-                    text = "Frederic - ¿Qué es esto? ¿una herida? Mierda tengo una cortada infectada en el abdomen."
-                    func.printText(text, 0)
-                    # func.playSound(sounds, "sonidoHeridaFrederic.wav", 1, [0, 0, 0], [0, 0, 0], 1, 2, False)
-                    cont += 1
-                elif decision == "2":
-                    cont += 1
+            print("¿Qué quieres hacer? \n1. Levantarse \n2. Caminar")
+            decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
+            if decision == "1":
+                text = "Frederic - ¿Qué es esto? ¿una herida? Mierda tengo una cortada en el abdomen, mejor me muevo de acá."
+                hurtThread = func.playSound(sounds, "sonidoHeridaFrederic.wav", 1, 1, [0, 0, 0], [0, 0, 0], 0, False, "static")
+                func.playerInteraction(sounds, "continue", text, hurtThread, "sonidoHeridaFrederic.wav", 0)
+                cont += 1
+            else:
+                cont +=1
 
-    text = "Frederic - Parece que estoy en una especie de cueva. ¿Dónde demonios está mi equipo? Demonios, esa espada me costó tanto " \
-            "como una semana en el burdel. Me acercaré a esa luz; puede que encuentre algo de utilidad o ver algo.\n\n" \
-            "Dios - Frederic, confundido y sin saber dónde está, se acerca a la luz con cautela.\n\n" \
-            "Frederic - ¿Una fogata? ¿Qué hace una fogata aquí?\n\n" \
-            "Frederic - No veo nada de relevancia excepto este palo seco."
+    humanStepsThread = func.playSound(sounds, "sonidoPasosHumano.wav", 1.5, 1, [0, -3, 0], [0, -1, 0], 2, True, "static")
+    # bonfireThread = func.playSound(sounds, "sonidoFogata.wav", 1, 1, [12, 0, 12], [0, 0, 0], 1, True, "move")
+    text = "Frederic - Parece que estoy en una especie de cueva. ¿Dónde demonios está mi equipo? Demonios, esa espada me costó tanto \
+            como una semana en el burdel. Me acercaré a esa luz; puede que encuentre algo de utilidad o ver algo.\n\n \
+            Dios - Frederic, confundido y sin saber dónde está, se acerca a la luz con cautela.\n\n \
+            Frederic - ¿Una fogata? ¿Qué hace una fogata aquí?\n\n \
+            Frederic - No veo nada de relevancia excepto este palo seco."
     func.printText(text, 0)
-    # func.playSound(sounds, "sonidoGotasCueva.wav", 0.8, [-1, 0, -1], [-1, 0, -1], 1, 0, False)
-    # func.playSound(sounds, "sonidoPasosHumano.wav", 1, [0, -1, 0], [0, -1, 0], 1, 0, False)
-    # func.playSound(sounds, "sonidoFogata.wav", 1, [0, 0, 0], [0, 0, 0], 1, 0, False)
-    # func.playSound(sounds, "sonidoFogata.wav", 1, [0, 0, -1], [0, 0, 0], 1, 0, False)
-
+    # player movement
+    """
+    for i in range(13):
+        player.set_position((12 - i, 0, 12))
+        if i == 12 and bonfireThread.is_alive():
+            sounds["sonidoFogata.wav"].stop()
+            bonfireThread.join()
+        time.sleep(1)
+    """
+    if waterdropsThread.is_alive() and waterdropsThread2.is_alive and humanStepsThread.is_alive():
+        sounds["sonidoGotasCueva.wav"].stop()
+        sounds["sonidoGotasCueva2.wav"].stop()
+        sounds["sonidoPasosHumano.wav"].stop()
+        waterdropsThread.join()
+        waterdropsThread2.join()
+        humanStepsThread.join()
+    """
     cont = 0
     while cont < 1:
         print("¿Qué quieres hacer? \n1. Hacer una antorcha \n2. Arrojar el palo al fuego")
-        # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-        decision = input(":")
+        decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
 
         if decision == "1":
             text = "Frederic - Parece que este palo puede servir para hacer una antorcha.\n\n" \
@@ -110,8 +121,7 @@ def main():
             cont = 0
             while cont < 1:
                 print("¿Qué quieres hacer? \n1. Devolverse y func.avanzar por el camino de la fogata \n2. Despejar el camino bloqueado")
-                # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-                decision = input(":")
+                decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
 
                 if decision == "1":
                     text = "Frederic - No sé qué fue eso, mejor me muevo rápido, me devuelvo a la fogata y me preparo para luchar.\n\n" \
@@ -198,8 +208,7 @@ def main():
     cont = 0
     while cont < 1:
         print("¿Qué quieres hacer? \n1. Atacar \n2. Bloquear y contraatacar \n3. Engañar a la araña")
-        # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-        decision = input(":")
+        decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
 
         if decision == "1":
             cont += 1
@@ -235,6 +244,7 @@ def main():
             # func.playSound(sounds, "sonidoRio.wav", 0.8, [0, -5, 0], [0, -5, 0], 2, 0, False)
             # func.playSound(sounds, "sonidoSplashAgua.wav", 1, [0, 0, 0], [0, 0, 0], 2, 0, False)
     """
+    """
     # func.playSound(sounds, "sonidoEspada.wav", 1, [0, 0, 0], [0, 0, 0], 2, 0, False)
     print("Frederic - Puff, espero no encontrarme con más de una al mismo tiempo… Ahora debo centrarme en func.avanzar y encontrar a los demás.")
     # func.playSound(sounds, "sonidoSuspiro.wav", 1, [0, 0, 0], [0, 0, 0], 1, 0, False)
@@ -256,13 +266,11 @@ def main():
     while cont < 1:
         if not tiene_pechera:
             print("¿Qué quieres hacer? \n1. Primer camino(Se ve muy oscuro, pero hay un luz al final) \n3. Tercer camino(Parece el mas seguro, esta muy limpio)")
-            # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-            decision = input(":")
+            decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
 
         else: 
             print("¿Qué quieres hacer? \n2. Segundo camino(Tiene manchas de sangre y huesos, pero tambien tiene un aroma familiar) \n3. Tercer camino(Parece el mas seguro, esta muy limpio)")
-            # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-            decision = input(":")
+            decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
 
         print("Frederic - Bueno en marcha, no saldré si no me muevo.")
         # func.playSound(sounds, "sonidoPasosHumano.wav", 1, [0, -1, 0], [0, -1, 0], 1, 0, False)
@@ -280,8 +288,7 @@ def main():
             cont = 0
             while cont < 1:
                 print("¿Qué quieres hacer? \n1. Enfocarse en el pensamiento \n2. Ignorar este pensamiento y seguir avanzando")
-                # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-                decision = input(":")
+                decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
 
                 if decision == "1":
                     cont += 1
@@ -349,8 +356,7 @@ def main():
             cont = 0
             while cont < 1:
                 print("¿Qué quieres hacer? \n1. Atacar a las patas. \n2. Atacar a la mandibula")
-                # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-                decision = input(":")
+                decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
 
                 if decision == "1":
                     cont += 1
@@ -399,8 +405,7 @@ def main():
             cont = 0
             while cont < 1:
                 print("¿Qué quieres hacer? \n1. Regresar. \n2. Saltar \n:")
-                # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-                decision = input(":")
+                decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
 
                 if decision == "1":
                     cont += 1
@@ -481,8 +486,7 @@ def main():
             cont = 0
             while cont < 1:
                 print("¿Qué quieres hacer? \n1. Salvar a Chef. \n2. Salvar a Axel")
-                # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-                decision = input(":")
+                decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
 
                 if decision == "1":
                     cont += 1
@@ -599,8 +603,7 @@ def main():
             cont = 0
             while cont < 1:
                 print("¿Qué quieres hacer? \n1. Gritar. \n2. Rendirse \n:")
-                # func.playSound(sounds, "sonidoSeleccion.wav", 0.7, [0, 0, 0], [0, 0, 0], 2, 0, False)
-                decision = input(":")
+                decision = func.playerInteraction(sounds, "selection", "", "", "", 0)
 
                 if decision == "1":
                     cont += 1
@@ -632,8 +635,8 @@ def main():
     
     print("FIN")
         """
+    # Clean and close openAL
+    oalQuit()
+
 # start the game
 main()
-
-# Clean and close openAL
-oalQuit()
