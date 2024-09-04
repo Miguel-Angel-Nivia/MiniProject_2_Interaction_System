@@ -21,7 +21,7 @@ def obtainingSound():
     return sounds
 
 
-def playSoundEspecialThreads(sound, playerPos, soundPos, initialVol, maxDistance):
+def playSoundEspecialThreads(sound, playerPos, soundPos, initialVol, maxDistance, loop, stopEvent):
     """
     Adjusts the sound volume based on the distance between the player and the target.
     
@@ -31,25 +31,38 @@ def playSoundEspecialThreads(sound, playerPos, soundPos, initialVol, maxDistance
         soundPos: The position of the sound (x, y, z).
         initial_volume: The initial volume of the sound.
         max_distance: The maximum distance at which the sound should be audible.
+        stopEvent (threading.Event): Event to signal when to stop the sound.
     """
-    sound.set_gain(initialVol)
-    sound.set_position(soundPos)
-    sound.play()
-    flag = True
-    while flag:
-        # Calculate the distance between the player and the campfire
-        distance = ((playerPos[0] - soundPos[0]) ** 2 + (playerPos[1] - soundPos[1]) ** 2 + (playerPos[2] - soundPos[2]) ** 2) ** 0.5
-        # Calculate the new volume based on the distance
-        if distance > maxDistance:
-            volume = 0
-        else:
-            volume = initialVol * (1 - (distance / maxDistance))
-        # Ajusta el volumen y la posición del sonido
-        sound.set_gain(volume)
-        sound.set_position(soundPos)
-        time.sleep(0.1)
+    sound.set_gain(initialVol)  # Set the initial volume
+    sound.set_position(soundPos)  # Set the position of the sound
+    sound.set_looping(True)  # Loop the sound indefinitely
+    sound.play()  # Start playing the sound
 
-def playSoundThreads(sound, volume, speed, spatialPos, spaceVel, loop):
+    while not stopEvent.is_set():
+        # Calculate the distance between the listener (player) and the campfire
+        distance = ((playerPos[0] - soundPos[0]) ** 2 + (playerPos[1] - soundPos[1]) ** 2 + (playerPos[2] - soundPos[2]) ** 2) ** 0.5
+        if distance <= 0.3:
+            # Stop adjusting position and volume, but continue to play the sound at maximum volume
+            sound.set_gain(initialVol)
+        else:
+            # Calculate the new volume based on the distance
+            if distance > maxDistance:
+                volume = 0
+            else:
+                volume = initialVol * (1 - (distance / maxDistance))
+            # Adjust the volume
+            sound.set_gain(volume)
+            # Update the listener's position based on the direction towards the sound
+            oalGetListener().set_position(playerPos) 
+            # Check if player has reached the campfire
+            step = 0.1
+            playerPos[0] += step if playerPos[0] < soundPos[0] else -step
+            playerPos[2] += step if playerPos[2] < soundPos[2] else -step
+            time.sleep(0.5)
+    # Stop the sound once the event is set
+    sound.stop()
+
+def playSoundThreads(sound, volume, speed, spatialPos, loop):
     """
     # Function to play Sounds, where you can modify various characteristics of it.
 
@@ -61,14 +74,12 @@ def playSoundThreads(sound, volume, speed, spatialPos, spaceVel, loop):
                                 where x = 1 is right and -1 is left,
                                 where y = 1 is up and -1 is down and
                                 where z = 1 near (forward) and -1 far (back).
-        spaceVel (list(float)): List of integers of size 3 containing the "x", "y", and "z" velocities of sound.
         loop (bool): Flag indicating whether the sound plays infinitely or not.
     """
     # Sound settings.
     sound.set_gain(volume)
     sound.set_pitch(speed)
     sound.set_position((spatialPos[0], spatialPos[1], spatialPos[2]))
-    sound.set_velocity((spaceVel[0], spaceVel[1], spaceVel[2]))
     if loop:
         sound.set_looping(True)
     sound.play()
@@ -77,7 +88,7 @@ def playSoundThreads(sound, volume, speed, spatialPos, spaceVel, loop):
         time.sleep(0.1)
 
 
-def playSound(sounds, name, volume, speed, spatialPos, spaceVel, timeToWait, loop, sel):
+def playSound(sounds, name, volume, speed, spatialPos, timeToWait, loop, sel, stopEvent=None):
     """
     Function to play Sounds concurrently using threads, where you can modify various characteristics of the sound.
     Arguments:
@@ -88,19 +99,19 @@ def playSound(sounds, name, volume, speed, spatialPos, spaceVel, timeToWait, loo
     """
     if name not in sounds:
         print(f"El sonido '{name}' no se encontró.")
-        return 1
+        return None
     
     # Load and play the sound file.
     sound = sounds[name]
     if sel == "static":
         # Setting up and playing sound in a separate threads
-        thread = threading.Thread(target = playSoundThreads, args = (sound, volume, speed, spatialPos, spaceVel, loop))
+        thread = threading.Thread(target = playSoundThreads, args = (sound, volume, speed, spatialPos, loop))
         thread.start()
         if timeToWait != 0:
             time.sleep(timeToWait)
     elif sel == "move":
         # Create a thread to adjust the sound based on distance
-        thread = threading.Thread(target = playSoundEspecialThreads, args = (sound, [0, 0, 0], spatialPos, volume, 12))
+        thread = threading.Thread(target = playSoundEspecialThreads, args = (sound, [0, 0, 0], spatialPos, volume, 6, loop, stopEvent))
         thread.start()
 
     return thread
@@ -131,7 +142,7 @@ def playerInteraction(sounds, info, text, thread, sound, number):
     """
     if info == "selection":
         decision = None
-        selectionThread = playSound(sounds, "sonidoSeleccion.wav", 0.7, 2, [0, 0, 0], [0, 0, 0], 0, False, "static")
+        selectionThread = playSound(sounds, "sonidoSeleccion.wav", 0.7, 2, [0, 0, 0], 0, False, "static")
         if selectionThread.is_alive():
             try:
                 decision = input(":")
