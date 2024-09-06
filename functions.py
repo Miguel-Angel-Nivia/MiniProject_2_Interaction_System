@@ -1,164 +1,95 @@
+import os
+import time
+import textwrap
+import threading
+import msvcrt
 from openal import *
-import os, time, textwrap, threading
 
-# Code Functionality
-# By: Miguel Angel Nivia Y Daniel Vasquez
-
-def obtainingSound():
-    """
-    # Function to get sounds with relative path.
-    """
-    # Get the path of the directory where the current script is.
+def obtain_sounds():
+    """Get sounds with relative path."""
     root = os.path.dirname(os.path.abspath(__file__))
+    sounds_file = os.path.join(root, "Sounds")
+    return {name: oalOpen(os.path.join(sounds_file, name)) for name in os.listdir(sounds_file)}
 
-    # Build the path to the sounds file.
-    soundsFile = os.path.join(root, "Sounds")
-    sounds = {}
-    for nombre in os.listdir(soundsFile):
-        soundRoute = os.path.join(soundsFile, nombre)
-        sound = oalOpen(soundRoute)
-        sounds[nombre] = sound
-    return sounds
-
-
-def playSoundEspecialThreads(sound, playerPos, soundPos, initialVol, maxDistance, loop, stopEvent):
-    """
-    Adjusts the sound volume based on the distance between the player and the target.
-    
-    Arguments:
-        sound (str): Target sound.
-        playerPos: The current position of the player (x, y, z).
-        soundPos: The position of the sound (x, y, z).
-        initial_volume: The initial volume of the sound.
-        max_distance: The maximum distance at which the sound should be audible.
-        stopEvent (threading.Event): Event to signal when to stop the sound.
-    """
-    sound.set_gain(initialVol)  # Set the initial volume
-    sound.set_position(soundPos)  # Set the position of the sound
-    sound.set_looping(True)  # Loop the sound indefinitely
-    sound.play()  # Start playing the sound
-
-    while not stopEvent.is_set():
+def play_sound_with_distance(sound, player_pos, sound_pos, initial_vol, max_distance, loop, stop_event):
+    """Adjust sound volume based on distance between player and target."""
+    sound.set_gain(initial_vol)
+    sound.set_position(sound_pos)
+    sound.set_looping(loop)
+    sound.play()
+    while not stop_event.is_set():
         # Calculate the distance between the listener (player) and the campfire
-        distance = ((playerPos[0] - soundPos[0]) ** 2 + (playerPos[1] - soundPos[1]) ** 2 + (playerPos[2] - soundPos[2]) ** 2) ** 0.5
+        distance = ((player_pos[0] - sound_pos[0]) ** 2 + (player_pos[1] - sound_pos[1]) ** 2 + (player_pos[2] - sound_pos[2]) ** 2) ** 0.5
         if distance <= 0.3:
             # Stop adjusting position and volume, but continue to play the sound at maximum volume
-            sound.set_gain(initialVol)
+            sound.set_gain(initial_vol)
         else:
             # Calculate the new volume based on the distance
-            if distance > maxDistance:
+            if distance > initial_vol:
                 volume = 0
             else:
-                volume = initialVol * (1 - (distance / maxDistance))
-            # Adjust the volume
+                volume = initial_vol * (1 - (distance / max_distance))
             sound.set_gain(volume)
             # Update the listener's position based on the direction towards the sound
-            oalGetListener().set_position(playerPos) 
+            oalGetListener().set_position(player_pos) 
             # Check if player has reached the campfire
             step = 0.1
-            playerPos[0] += step if playerPos[0] < soundPos[0] else -step
-            playerPos[2] += step if playerPos[2] < soundPos[2] else -step
+            player_pos[0] += step if player_pos[0] < sound_pos[0] else -step
+            player_pos[2] += step if player_pos[2] < sound_pos[2] else -step
             time.sleep(0.5)
-    # Stop the sound once the event is set
-    sound.stop()
 
-def playSoundThreads(sound, volume, speed, spatialPos, loop):
-    """
-    # Function to play Sounds, where you can modify various characteristics of it.
-
-    Arguments:
-        sound (str): Chosen sound.
-        volume (float): Numerical value of sound volume where 1.0 is the standard.
-        speed (float): Speed of sound reproduction.
-        spatialPos (list(float)): List of integers of size 3 containing the "x", "y" and "z" positions of the sound spatially.
-                                where x = 1 is right and -1 is left,
-                                where y = 1 is up and -1 is down and
-                                where z = 1 near (forward) and -1 far (back).
-        loop (bool): Flag indicating whether the sound plays infinitely or not.
-    """
-    # Sound settings.
+def play_sound_threaded(sound, volume, speed, spatial_pos, loop):
+    """Play sounds with modifiable characteristics."""
     sound.set_gain(volume)
     sound.set_pitch(speed)
-    sound.set_position((spatialPos[0], spatialPos[1], spatialPos[2]))
-    if loop:
-        sound.set_looping(True)
+    sound.set_position(tuple(spatial_pos))
+    sound.set_looping(loop)
     sound.play()
-    # Keep the sound playing in loop
     while loop and sound.get_state() == AL_PLAYING:
         time.sleep(0.1)
 
-
-def playSound(sounds, name, volume, speed, spatialPos, timeToWait, loop, sel, stopEvent=None):
-    """
-    Function to play Sounds concurrently using threads, where you can modify various characteristics of the sound.
-    Arguments:
-        The same ones that appear in "playSoundThreads" except this one:
-        sounds (dic): Sound dictionary.
-        name (str): Name of the sound file to play.
-        timeToWait (float): Execution time of the sound.
-    """
+def play_sound(sounds, name, volume, speed, spatial_pos, time_to_wait, loop, sel, stop_event=None):
+    """Play sounds concurrently using threads."""
     if name not in sounds:
-        print(f"El sonido '{name}' no se encontró.")
         return None
-    
-    # Load and play the sound file.
     sound = sounds[name]
     if sel == "static":
-        # Setting up and playing sound in a separate threads
-        thread = threading.Thread(target = playSoundThreads, args = (sound, volume, speed, spatialPos, loop))
-        thread.start()
-        if timeToWait != 0:
-            time.sleep(timeToWait)
+        thread = threading.Thread(target=play_sound_threaded, args=(sound, volume, speed, spatial_pos, loop))
     elif sel == "move":
-        # Create a thread to adjust the sound based on distance
-        thread = threading.Thread(target = playSoundEspecialThreads, args = (sound, [0, 0, 0], spatialPos, volume, 6, loop, stopEvent))
-        thread.start()
-
+        thread = threading.Thread(target=play_sound_with_distance, args=(sound, [0, 0, 0], spatial_pos, volume, 6, loop, stop_event))
+    else:
+        raise ValueError("Invalid selection. Choose 'static' or 'move'.")
+    
+    thread.start()
+    if time_to_wait:
+        time.sleep(time_to_wait)
     return thread
 
-def printText(text, clean):
-    # Function to display text in cmd with a width of 70.
-    line = textwrap.wrap(text, width = 80)
-    for i in line:
-        print(i)
-    entrada = None
-    while entrada != "":
-        entrada = input("\nPresiona enter para continuar...\n")
-    if clean == 1:
-        os.system('cls')
+def print_text(text, clean):
+    """Display text in cmd with a width of 80."""
+    for line in textwrap.wrap(text, width=80):
+        print(line)
+    print("\nPresione una tecla para continuar...\n")
+    msvcrt.getch()
 
-    return 0
+    if clean:
+        os.system('cls' if os.name == 'nt' else 'clear')
 
-def playerInteraction(sounds, info, text, thread, sound, number):
-    """
-    Function to execute the player selection for a decision/Interaction.
-    Arguments:
-        sounds (dic): sound dictionary.
-        info (str): Information on action to be taken.
-        text (str): Text to print.
-        thread (thread): Thread to be executed.
-        sound (str): Name of the sound.
-        number (int): Number to know if you want to clean the console or not.
-    """
+def player_interaction(sounds, info, text, thread, sound, number):
+    """Execute player selection for a decision/interaction."""
     if info == "selection":
-        decision = None
-        selectionThread = playSound(sounds, "sonidoSeleccion.wav", 0.7, 2, [0, 0, 0], 0, False, "static")
-        if selectionThread.is_alive():
-            try:
-                decision = input(":")
-            finally:
-                sounds["sonidoSeleccion.wav"].stop() and selectionThread.join()
-        return decision
-    
+        selection_thread = play_sound(sounds, "sonidoSeleccion.wav", 0.7, 2, [0, 0, 0], 0, False, "static")
+        if selection_thread.is_alive(): sounds["sonidoSeleccion.wav"].stop() and selection_thread.join()
+        decision = input(":")
+        return int(decision)
     elif info == "continue":
-        if thread.is_alive():
-            try:
-                printText(text, number)
-            finally:
-                sounds[sound].stop() and thread.join()
+        print_text(text, number)
+        sounds[sound].stop()
+        thread.join()
     return 0
 
-def loadingScreen():
+def loading_screen():
+    """Print the start menu."""
     # Function to print the start menu.
     print("                         _____ _                     _   _                              ")
     print("                        | __  |_|___ ___ _ _ ___ ___|_|_| |___                          ")
@@ -192,4 +123,3 @@ def loadingScreen():
     print("|  |__|     |    | | |  |  | | | | __ -|     |  |  |  |   __|  |__   |   __|  |  |     |")
     print("|_____|__|__|    |_| |_____|_|_|_|_____|__|__|  |____/|_____|  |_____|_____|____/|__|__|")
     print("\n                                Hecho Por: Miguel Angel Nivia Y Daniel Vasquez Murillo")
-    return 0
