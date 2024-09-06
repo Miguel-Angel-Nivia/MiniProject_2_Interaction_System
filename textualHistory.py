@@ -37,46 +37,7 @@ def get_player_decision(sounds, options):
     for i, option in enumerate(options, 1):
         print(f"{i}. {option}")
     return func.player_interaction(sounds, "selection", "", "", "", 0)
-
-"""
-def main():
-    oalInit()
-    player = Listener()
-    player.set_position((0, 0, 0))
-    sounds = func.obtain_sounds()
     
-    story_data = load_story_data('story.csv')
-    
-    play_intro(sounds)
-    
-    current_scene_id = '1'
-    background_thread = None
-    
-    while current_scene_id in story_data:
-        scene = story_data[current_scene_id]
-        
-        if scene['text'] == 'detener':
-            if background_thread.is_alive():
-                sounds[scene['sound']].stop()
-                background_thread.join()
-            current_scene_id = scene['next_id']
-        else:
-            play_scene(sounds, scene)
-            if scene['loop'] == "True":
-                background_thread = func.threading.Thread(target=func.play_sound_threaded, args=(sounds[scene['sound']], 0.3, 1, [0, 0, -2], True))
-                background_thread.start()
-            if scene['options']:
-                options = scene['options'].split('|')
-                next_ids = scene['next_id'].split('|')
-                decision = get_player_decision(sounds, options)
-                current_scene_id = next_ids[decision - 1]
-            else:
-                current_scene_id = scene['next_id']
-    
-    # End of game
-    print("Thanks for playing!")
-"""
-
 def main():
     oalInit()
     # Player
