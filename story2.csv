@@ -1,0 +1,141 @@
+id,text,sound,volume,speed,position,duration,loop,type,clear_screen,options,next_id
+1,"Dios - Frederic es un aventurero común y corriente que hace parte de un grupo de mercenarios, donde él despierta después de una exploración que salió mal y con un fuerte dolor de cabeza.",sonidoViento.wav,1,2,"[0, 1, 0]",3,False,static,1,,2
+2,"[Frederic] - Ahg que.. que paso? ¿Dónde estoy? No veo absolutamente nada, hay un olor a humo, estoy mojado y repleto de lodo.",sonidoGotasCueva.wav,0.3,1,"[0, 0, 0]",1,True,static,0,,3
+3,"¿Qué quieres hacer?",,,,,,,"decision",0,"Levantarse|Mirar a tu alrededor","4|5"
+4,"[Frederic] - ¿Qué es esto? ¿una herida? Mierda tengo una cortada infectada en el abdomen.",sonidoHeridaFrederic.wav,1,1,"[0, 0, 0]",2,False,static,0,,6
+5,"[Frederic] - Qué carajo, no se ve nada alrededor, ¿Uh?… ¿Qué es eso? Algo brilla al fondo, mejor voy para allá.",sonidoDudaFrederic.wav,0.8,1,"[0, 0, 0]",2,False,static,0,,7
+6,"¿Qué quieres hacer?",,,,,,,"decision",0,"Levantarse|Caminar","8|10"
+7,"¿Qué quieres hacer?",,,,,,,"decision",0,"Inspeccionar cuerpo|Caminar","9|10"
+8,"[Frederic] - Qué carajo, no se ve nada alrededor, ¿Uh?… ¿Qué es eso? Algo brilla al fondo, mejor voy para allá.",sonidoDudaFrederic.wav,0.8,1,"[0, 0, 0]",2,False,static,0,,10
+9,"[Frederic] - ¿Qué es esto? ¿una herida? Mierda tengo una cortada infectada en el abdomen.",sonidoHeridaFrederic.wav,1,1,"[0, 0, 0]",2,False,static,0,,10
+10,,sonidoFogata.wav,5,1,"[0, 0, 5]",0,False,static,0,,11
+11,"[Frederic] - Parece que estoy en una especie de cueva. ¿Dónde demonios está mi equipo? Demonios, esa espada me costó tanto como una semana en el burdel. Me acercaré a esa luz; puede que encuentre algo de utilidad o ver algo. [Dios] - Frederic, confundido y sin saber dónde está, se acerca a la luz con cautela. [Frederic] - ¿Una fogata? ¿Qué hace una fogata aquí?, No veo nada de relevancia excepto este palo seco.",sonidoPasosHumano.wav,1,1,"[0, -3, 0]",2,False,static,0,,12
+12,"¿Qué quieres hacer?",,,,,,,"decision",0,"Hacer una antorcha|Arrojar el palo al fuego","13|24"
+13,,sonidoCrafteo.wav,1,1,"[0, 0, 1]",1,False,static,0,,14
+14,"Dios - Frederic, ahora con antorcha en mano, se dispuso a explorar las inmediaciones de la cueva",sonidoPasosHumano.wav,1,1,"[0, -3, 0]",2,False,static,0,,15
+15,,sonidoBaba.wav,11,1,"[0, 0, 0]",5,False,static,0,,16
+16,"[Frederic] - Ojalá ahora encuentre esa maldita espada. ¿Qué carajo...? Toda la cueva está llena de arañazos y un extraño líquido verde... ¿Eso es un derrumbe? Veo algo de luz del otro lado... ¿Qué mierda pasó aquí? Este camino está bloqueado... ¿Qué fue eso? Mierda mi antorcha, ¿Quién está ahí? ¡Sal y pelea, cobarde!",sonidoMujerGritando.wav,0.5,1,"[0, 0, 0]",6,False,static,0,,17
+17,,sonidoMonstruoRugido.wav,0.7,1,"[-2, 0, 0]",8,False,static,0,,18
+18,"¿Qué quieres hacer?",,,,,,,"decision",0,"Avanzar por el único camino|Despejar el camino bloqueado","19|21"
+19,,sonidoCorrerHumano.wav,1,1,"[0, -3, 0]",4,False,static,0,,20
+20,"[Frederic] - No sé qué fue eso, mejor me preparo para luchar. Aquí está la pechera que compré en rebaja, qué porquería de pechera, casi me cuesta la vida, tiene una gran abertura en el abdomen. ¿Por qué estaba aquí? Las correas están intactas. ¿Quién me la habrá quitado? Bueno, eso no importa, me la pondré, de algo debe servir, esto es mejor que nada.",sonidoArmadura.wav,1,1,"[0, -3, 0]",1,False,static,0,,25
+21,,sonidoPasosHumano.wav,1,1,"[0, -3, 0]",2,False,static,0,,22
+22,,sonidoMurcielagos.wav,1,1,"[0, 5, 5]",1,False,static,0,,23
+23,"[Frederic] - Supongo que puedo intentar salir por donde entré. Carajo llevo varios minutos y estas piedras no se mueven lo suficiente. Esta cueva es más grande de lo que pensaba, está llena de estalagmitas y de estalactitas, sin quitar \de lado esta asquerosa cantidad de murciélagos. Mejor me preparo para avanzar por el otro camino.",sonidoRocasCayendo.wav,1,1,"[0, 0, 0]",2,False,static,0,,25
+24,"Frederic - Mierda casi me quemo, el fuego creció demasiado, por lo menos ahora puedo ver lo que está en la cercanía. Dios - Frederic sin nada de luz para explorar, se sienta a ver la fogata, mientras recuerdos llegan a su mente, luego de eso la fogata se extingue por completo. Frederic - Ahora solo tengo dos opciones, avanzar por esta cueva o morir de viejo esperando a que pase algo interesante… avanzare.",sonidoBar.wav,1,1,"[0, 0, -10]",1,False,static,0,,25
+25,,sonidoPasosHumano.wav,1,1,"[0, -3, 0]",2,False,static,0,,26
+26,,sonidoRio.wav,0.8,1,"[0, -5, 0]",1,False,static,0,,27
+27,"Frederic - Llevo caminando una rato, ya me canse, ¿Dónde está la salida?, esta cueva es enorme, al menos veo el camino con este río fosforescente color verde vómito. Qué suerte la mía, esta cueva será mi tumba y este río apesta a cadáver de grifo. ¿Qué es eso?… Bien!!!! mi espada, pensé que no te encontraría, ven aquí preciosa, te besaría, pero no quiero hacerme otra herida. Aún manchada de verde tienes tanto filo como las palabras de verónica. ¿Qué!!!!!? Veronica, maldición, ¿Dónde está esa sexy clérigo de ojos morados? Mierda dónde están el Jefe y Axcel, Vinimos aquí buscando algo pero… ¿Qué era? Céntrate, ahora estoy solo, por lo menos ahora tengo algo para defenderme.",sonidoRecoger.wav,0.8,1,"[0, -5, 0]",6,False,static,0,,28
+28,"Dios - Frederic camino otros cinco minutos sin parar de hacerse la misma pregunta, ¿Que paso en la cueva? Frederic - ¿Ah? ¿Qué es eso? Una puerta de madera rota madera, es gigante, parece que llegue al final de este maldito camino, pensé que no saldría de aquí, espero que allí esté Veronica esperándome con algun hechizo para recuperarme de esta herida, no puedo esperar para poner mis manos sobre esas curvas…",sonidoRisaFrederic.wav,0.8,1,"[0, -5, 0]",5,False,static,0,,29
+29,"Frederic - Pero que carajo, ¿Una araña? esta cosa es tan grande como un lobo blanco.",sonidoAraña.wav,0.7,1,"[2, 0, 0]",2,False,static,0,,30
+30,"¿Qué quieres hacer?",,,,,,,"decision",0,"Empujar|Esquivar","31|32"
+31,"Frederic - Uh… ¿La pechera? Fue directo al hombro. Buen ataque idiota, no falles el próximo, pero espera tu turno, ahora me toca a mí.",sonidoAraña.wav,0.7,1,"[0, 0, 0]",2,False,static,0,,33
+32,"Frederic - Ahhh!!! maldición, me diste en el hombro izquierdo ¿eso es ácido?, idiota eso va a dejar cicatriz, ven aquí estúpida arañita, vamos a jugar.",sonidoSuspiro.wav,1,1,"[0, 0, 0]",2,False,static,0,,33
+33,"¿Qué quieres hacer?",,,,,,,"decision",0,"Atacar|Bloquear|Engañar","34|36|38"
+34,,sonidoEspada.wav,1,1,"[0, 0, 0]",1,False,static,0,,35
+35,"Frederic - Toma esto idiota ¿Te gustó? ¿Quieres una segunda cita?, Ahg!!!! quédate quieta de una vez",sonidoAtaqueAraña.wav,1,1,"[0, 0, 0]",2,False,static,0,,41
+36,,sonidoAraña.wav,0.7,1,"[2, 0, 0]",2,False,static,0,,37
+37,"Frederic - ¿Crees que ese ataque podría hacerme algo? No en esta vida, Ahg!!! Eso estuvo cerca, déjame mostrarte cómo se hace.",sonidoAtaqueAraña.wav,1,1,"[0, 0, 0]",2,False,static,0,,41
+38,,sonidoCorrerHumano.wav,1,1,"[0, -3, 0]",4,False,static,0,,39
+39,"Frederic - Ven aquí, Dios - Frederic espero pacientemente en una esquina a que la araña llegara, para hacerla caer en su plan.Frederic - Vamos ¿Qué haces ahí descansando? ¿No tenías ganas de darme un buen mordisco?... Ven!!! Dios - Al atacar la araña, Frederic la ataco directamente lo que la hizo retroceder y caer en el río verde.",sonidoAtaqueAraña.wav,1,1,"[0, 0, 0]",2,False,static,0,,40
+40,,sonidoSplashAgua.wav,1,1,"[0, -5, 0]",3,False,static,0,,41
+41,,sonidoEspada.wav,1,1,"[0, 0, 0]",1,False,static,0,,42
+42,"Frederic - Puff, espero no encontrarme con más de una al mismo tiempo… Ahora debo centrarme en avanzar y encontrar a los demás.",sonidoSuspiro.wav,1,1,"[0, 0, 0]",2,False,static,0,,43
+43,"Dios - Frederic despues de atravezar el marco de puerta, se encontro con una dura decision. Frederic - ¿Nogh ahora qué? ¿2 caminos? ¿Esto es un laberinto o es una cueva? A este paso tendré que pensar en quedarme aquí y vender araña asada en un palo. Dios - Frederic vacilante pensó cuál camino tomar.",sonidoEspada.wav,1,1,"[0, 0, 0]",1,False,static,0,,44
+44,"¿Qué quieres hacer?",,,,,,,"decision",0,"Derecho|izquierdo","45|83"
+45,,sonidoPasosHumano.wav,1,1,"[0, -3, 0]",2,False,static,0,,46
+46,"Frederic - Por el segundo camino veo cráneos, demasiadas telarañas y sangre verde por todos lados, definitivamente no voy a ir ahí a morir, mejor me voy por el primer camino. Frederic - ¿Qué es eso? Que bien, hay luz al final del túnel, estoy cerca de una salida, pero antes de eso, dónde están mis compañeros, pensándolo bien…?",,,,,,,,,,47
+47,"¿Qué quieres hacer?",,,,,,,"decision",0,"Enfocarse en el pensamiento|Ignorar este pensamiento y seguir avanzando","48|49"
+48,"Frederic - Mierda…, ya recorde, vinimos buscando una estupida mazmorra para encontrar un huevo de araña matriarca, nos pagarian una buena cantidad en el mercado negro, demonios chicos, Veronica…, Chef… Axel… Dónde están? Creo que peleamos con algo y eso nos separó… ¿Qué era esa cosa?",sonidoBar.wav,1,1,"[0, 0, -10]",1,False,static,0,,50
+49,"Frederic - Nada, no recuerdo que paso, no tiene sentido tener pensamientos intrusivos ahora, tengo que seguir avanzando.",sonidoViento.wav,1,2,"[0, 1, 0]",0,False,static,0,,50
+50,,,,,,,,,,,51
+51,,sonidoPasosHumano.wav,1,1,"[0, -3, 0]",2,False,static,0,,52
+52,"Dios - Frederic continúa avanzando hasta que ve a lo lejos una sala de la cueva muy diferente a lo que ya ha visto antes. Frederic - Que maldito  asco, ¿Que pise? ¿Qué es eso?, son cientos de huevos y telarañas… parece la casa de otra asquerosa araña… ENORME!!!, mierda, mierda, puta madre, ya se donde estoy…",,,,,,,,,,53
+53,,sonidoBaba.wav,1.5,1,"[0, 0, 0]",5,False,static,0,,54
+54,,sonidoPasosJefe.wav,1.5,1,"[0, 0, 3]",5,False,static,0,,55
+55,"Frederic - El nido de la matriarca!!! Dios - Frédéric derrepente esucho unas pisadas cerca de el, donde inmediatamente se esconde detrás de unos huevos.",,,,,,,,,,56
+56,,sonidoPasosJefe.wav,1.5,1,"[0, 0, 3]",5,False,static,0,,57
+57,"Frederic - Ahora que, piensa, piensa, que se supone que haga?, ya no la esucho, pero eso no significa que no este, Yo solo no soy capaz de matar a esa cosa, debo escapar de aquí de inmediato, pero como?, parece que esa mamá araña quiere comida para sus horribles bebés, carajo. Me tengo que ir rápido, este asqueroso huevo podrido huele horrible… oh… mierda",,,,,,,,,,58
+58,,sonidoMonstruoRugido.wav,1.2,1,"[0, 0, 3]",3,False,static,0,,59
+59,"Dios - Frederic sin decir una palabra, observa como entra a la habitación con un gran sigilo una enorme, horripilante, tenebrosa araña matriarca negra con manchas verdes y con unos grandes colmillos altamente venenosos.",,,,,,,,,,60
+60,,sonidoAyudaM.wav,0.8,1,"[0, -2, 0]",3,False,static,0,,61
+61,"Frederic - Qué demonios come esa araña en una cueva como esta para estar así, si me enfrento a esa cosa estaré muerto. Fue ella la que causó todo este maldito infierno, fuimos emboscados y nos atrapó, supongo que fui el único que no se llevó por alguna razón, la bastarda me dejo para morir o simplemente no quiso comerme, maldita, todos deben estar aquíFrederic - Demonios… siento algo en la espalda… Esto picha, es un bigote, color blanco, pegado a un enano calvo con cara de enojado, mmm… me parece familiar, OH JEFE! Chef!, esperame ya te voy a sacar de ahí. Dios - Fue entonces que Frederic se dio cuenta que además de haber cientos de huevos a su alrededor, también había docenas de criaturas de diferentes especies atrapadas en capullos de telaraña esperando ser alimento para las crías de arañas.",,,,,,,,,,62
+62,,sonidoToserM.wav,0.7,1,"[0, 1, 0]",0,False,static,0,,63
+63,"Chef - Qu…Qué es esto? ¿Dónde estoy? Frede…ric? Dónde estamos, informarme de la situación actual, donde están los demás?  Frederic - Jefecito pensé que lo perdería, los demás están atrapados pero eso no importa, primero voy a sacarte de este capullo, solo deja que te quite esto de encima.  Chef - Gracias Frede…",,,,,,,,,,64
+64,,sonidoEspada.wav,1,1,"[0, 0, 0]",1,False,static,0,,65
+65,,sonidoAtrasTuyo.wav,1,1,"[0, 0, 0]",4,False,static,0,,66
+66,,sonidoAplastado.wav,1,1,"[0, 0, 0]",6,False,static,0,,67
+67,,sonidoGritoMuerte.wav,1,1,"[0, 0, 0]",7,False,static,0,,68
+68,"Dios - Fue en ese entonces que Frederic bañado en la sangre de su amigo se da cuenta que la araña los había escuchado e inmediatamente mató a Chef para darle sus entrañas a sus crías prontas a nacer.Frederic - JEFEEEEE!!! NOOOOO!!!, MIERDA!; MIERDA!, Maldita puta araña,quieres comer, ven aquí idiota!!!, esa es…, a quien está apunto de comerse, no, no, NOOOO ESPERA!!!",,,,,,,,,,69
+69,,sonidoEspada.wav,1,1,"[0, 0, 0]",1,False,static,0,,70
+70,"Dios - En ese momento Frederic visualizo como la matriarca tenia entre su boca tiene a Veronica a punto de ser masticada por el monstruo. Frederic - NOOOO MALDITA ARAÑAS, PELEA COBARDE, SUELA A VERONICA AHHHHH",,,,,,,,,,"71"
+71,"¿Qué quieres hacer?",,,,,,,"decision",0,"Atacar a las patas|Atacar a la mandibula","72|73"
+72,,sonidoAtaqueAraña.wav,1,1,"[0, 0, 0]",2,False,static,0,,74
+73,,sonidoAtaqueAraña.wav,1,1,"[0, 0, 0]",2,False,static,0,,76
+74,,sonidoMonstruoRugido.wav,1.5,1.5,"[0, 0, 0]",3,False,static,0,,75
+75,"Dios - Después de un golpe certero, Frederic logra cortar 2 de sus 8 patas donde el monstruo grita del dolor cayendo al suelo momentáneamente.",,,,,,,,,,"77"
+76,"Frederic - Es todo o nada, voy a lanzar la espada, ten cuidado Veronica, Sueltala!!! Dios - Derrepente Frederic logra herirla en la mandíbula, la matriarca enojada inmediatamente de un solo acto reflejo...",,,,,,,,,,78
+77,,sonidoCorrerHumano.wav,1,1,"[0, -3, 0]",4,False,static,0,,79
+78,,sonidoAplastado.wav,1,1,"[0, 0, 0]",6,False,static,0,,80
+79,"Frederic - voy por ti hermosura, espero que después de esta salvada épica me des por fin una cita. Dios - Frederic inmediatamente al inmovilizar a la araña matriarca abre su mandíbula y entra ligeramente. Frederic - Ya casi te saco, ah!!! vamos. Dios - Sin embargo en ese momento la araña matriarca despierta y de un solo acto reflejo…",,,,,,,,,,78
+80,"Dios - Aunque se encontraba motivado por el auge de la batalla, Frederic recordó sus anteriores palabras, 'Yo solo no soy capaz de matar a esa cosa', las cuales lo condenaron.",,,,,,,,,,81
+81,,sonidoDerrota.wav,1,1,"[0, 0, 0]",0,False,static,0,,82
+82,"Dios - Completamente machacado, lamentablemente Frederic y Verónica son comidos por la araña matriarcado, esparciendo sangre y tripas por toda la sala para que sus hijos se alimenten. Final Malo(#1) - 1/2 finales",,,,,,,,,,140
+83,,sonidoSuspiro.wav,1,1,"[0, 0, 0]",2,False,static,0,,84
+84,"Frederic - Ahg hay que descartar… bueno, no voy a entrar al primer camino, está demasiado oscuro y algo me dice que alguna cosa me esperaría del otro lado, voy a ir por la segunda ruta. Frederic - Mmm, esto parece un precipicio, está demasiado alto, no veo ninguna otra salida por alguna dirección, solo hacia abajo.",,,,,,,,,,85
+85,"¿Qué quieres hacer?",,,,,,,"decision",0,"Regresar|Saltar","86|91"
+86,,sonidoAraña.wav,0.8,1,"[0, 0, -1]",2,False,static,0,,87
+87,"Frederic - Mejor me devuelvo no hay salida por este lado, tal vez por otro camino, yo pueda, AH! otra araña!!!. Dios - Inmediatamente Frederic fue atacado por una araña que lo vio entrar al lugar, logrando empujarlo hacia el precipicio, donde ambos cayeron varios metros.",,,,,,,,,,88
+88,,sonidoGritoMuerte.wav,1,1,"[0, 0, 0]",7,False,static,0,,89
+89,"Frederic - Ahhhh, ¿Que hago?, ahora estoy cayendo, Carajo muerete ya. ",,,,,,,,,,90
+90,,sonidoAtaqueAraña.wav,1,1,"[0, 0, 0]",2,False,static,0,,92
+91,,sonidoCaida.wav,1.2,1,"[0, 0, 0]",2,False,static,0,,93
+92,,sonidoCaida.wav,1.2,1,"[0, 0, 0]",2,False,static,0,,94
+93,"Frederic - Supongo que solo queda ir hacia abajo y rogar para no morir. Dios - Fue en ese entonces que Frederic, cae un par de metros hasta que choca con varias telarañas rompiendolas unas tras otras pero logrando reducir su velocidad lo suficiente hasta caer al fondo sin daños graves.",,,,,,,,,,94
+94,"Dios - Frederic rápidamente usa el cuerpo de la araña muerta para usarla como cuerpo de soporte para aguantar un poco la caída y que él no sufra lesiones graves.",,,,,,,,,,95
+95,,sonidoCorrerHumano.wav,1,1,"[0, -3, 0]",0,False,static,1,,96
+96,"Frederic - ¿dónde estoy?, un momento… Huevos… telarañas… demonios, esto es… un nido de arañas, entonces debe haber una matriarca cerca, debe ser la misma que causó todo este problema Frederic - Parece que cuando entramos fuimos emboscados y nos atrapó, sin embargo me debió dejar atrás por estar en ese líquido asqueroso y cubierto de lodo, todos deben estar aquí, espero que estén vivos. Dios - Rápidamente Frederic busco entre los cuerpos enredados para encontrar a sus amigos",,,,,,,,,,97
+97,,sonidoEspada.wav,1,1,"[0, 0, 0]",1,False,static,0,,98
+98,"Frederic - Esa es?…VERONICA!, Esperame, ya te saco.",,,,,,,,,,99
+99,,sonidoBeso.wav,1,1,"[0, 0, 0]",4,False,static,0,,100
+100,"Veronica - … Freder…ic? ¿Eres tu?Frederic - Si, me alegra que estés con vida, estás un poco herida según veo, pero así solo te ves más sexy.Veronica - Quítate!!!, ni en esta situación puedes estar serio?, como sea, no tengo heridas graves, ¿vez mi mochila por algún lado? Frederic - Si, está al lado de dos hombres bestia que no lo lograron, qué pasa con ella? Veronica - Necesita que la traigas, ahi tengo una botella de maná, necesito recuperar energía para usar algún hechizo de curación.",,,,,,,,,,101
+101,,sonidoPasosHumano.wav,0.7,1,"[0, -3, 0]",2,False,static,0,,102
+102,"Dios - Frederic camino hasta la mochila con cuidado de no despertar ninguna cría y llevarle la poción a Veronica.",,,,,,,,,,103
+103,,sonidoBotella.wav,1,1,"[0, 0, 0]",2,False,static,0,,104
+104,"Frederic - Toma, bébetela toda, no dejes ni una gota, así crecerás grande y fuerte. Veronica - Callate!!! Aún estoy herida pero creo tener la suficiente energía para hacer algunos hechizos.",,,,,,,,,,105
+105,,sonidoHealing.wav,1,1,"[0, 0, 0]",3,False,static,0,,106
+106,"Dios - Inmediatamente Verónica cura a Frederic y a ella misma. Frederic - Excelente, Ahora me siento mejor, gracias preciosa, busquemos a los otros y larguémonos de aquí.",,,,,,,,,,107
+107,,sonidoPasosJefe.wav,1.5,1,"[0, 0, 3]",5,False,static,0,,108
+108,,sonidoMonstruoRugido.wav,1.5,1,"[0, 0, 5]",8,False,static,1,,109
+109,"Dios - Fue en ese preciso momento que vieron a la distancia en lugares opuestos a Axel y Chef, uno entre varios huevos de araña herido y el otro atrapado en un capullo de telaraña, sin embargo, justamente en ese momento llega la araña matriarca. Veronica - Debemos salvar a ambos, pero ahora solo podemos sacar a uno… que… que hacemos Frederic?",,,,,,,,,,110
+110,,sonidoDudaFrederic.wav,0.8,1,"[0, 0, 0]",0,False,static,0,,111
+111,"Dios - Frederic estaba en una situación terrible donde solo tenían suficiente tiempo para sacar a uno momentáneamente. Frederic - Que hago? Chef es nuestro tranque, cocinero, jefe y maestro, puede ser de gran ayuda pero no sé si necesitamos fuerza bruta o las extrañas habilidades de Axel, al ser un asesino especializado en sigilo, puede enfocarse en ataques vitales… ¿Qué carajo hago?",,,,,,,,,,112
+112,"¿Qué quieres hacer?",,,,,,,"decision",0,"Salvar a Chef|Salvar a Axel","113|125"
+113,,sonidoCorrerHumano.wav,1,1,"[0, 0, 0]",4,False,static,0,,114
+114,"Frederic - Rapido Verónica, ve por Chef, nos será de más utilidad ahora, curalo y prepárense para luchar, yo lo distraigo por ahora. Veronica - Entendido Frederic - Eh!!! Asquerosa araña ves esto¿Te gustó?.",,,,,,,,,,115
+115,,sonidoMonstruoRugido.wav,1.5,1,"[0, 0, 0]",3,False,static,0,,116
+116,,sonidoAtaqueAraña.wav,1,1,"[0, 0, 0]",2,False,static,0,,117
+117,"Dios - En ese momento, Frederic ya recuperado y con su fuerza al máximo comienza el ataque enfocándose en sus patas y dándole el mayor tiempo posible a Verónica.",,,,,,,,,,"118"
+118,,sonidoToserM.wav,0.7,1,"[0, 1, 0]",0,False,static,0,,119
+119,"Chef - Ho…Hola? Veronica, Veronica, vaya <sonidos de gritos>, que agradable sorpresa, puedo ver la situación, vamos hay que acabar con esa araña matriarca, está demasiado agresiva por la temporada de apareamiento. ",,,,,,,,,,120
+120,,sonidoCorrerHumano.wav,1,1,"[0, 0, 0]", 4,False,static,0,,121
+121,"Frederic - jajajaja Chef, te veo bien anciano, mejor ven y dame una mano antes de que lo mate yo ah!!!. Chef - Silencio Frederic, ahora te enseño cómo acabar con un monstruo de esa calidad, rápido, Veronica sigue a Frederic mientras van por atrás. Dios - Chef lider del grupo, ya recuperado utiliza un hechizo de encantamiento para atraer la atención de la araña matriarca y absorber daño para desencadenarlo en un fuerte impacto en su punto débil el abdomen mientras los demás la atacan por detrás sin preocuparse en ser objetivo de daño.",,,,,,,,,,122
+123,,sonidoEnchanter.wav,1.2,1,"[0, 0, 6]",1,False,static,0,,124
+124,,sonidoHealing.wav,1.2,1,"[0, 0, 0]",1,False,static,0,,125
+124,,sonidoAtaqueAraña.wav,1.2,1,"[0, 0, 0]",1,False,static,0,,125
+125,,sonidoCorrerHumano.wav,1,1,"[0, 0, 0]",4,False,static,0,,126
+126,"Frederic - Rapido Verónica, ve por Chef, nos será de más utilidad ahora, curalo y prepárense para luchar, yo lo distraigo por ahora. Veronica - Entendido Frederic - Eh!!! Asquerosa araña ves esto¿Te gustó?.",,,,,,,,,,127
+127,,sonidoAtaqueAraña.wav,1,1,"[0, 0, 0]",2,False,static,0,,128
+128,"Dios - En ese momento, Frederic ya recuperado y con su fuerza al máximo comienza el ataque enfocándose en sus patas y dándole el mayor tiempo posible a Verónica.",,,,,,,,,,129
+129,,sonidoBaba.wav,1,1,"[0, 0, 0]",5,False,static,0,,130
+130,"Axel - Ughhh!!!, maldita sea que asco, puaj, vaya, Veronica eres tu, gracias, ¿Como te lograste liberar? Veronica - No, me salvo Frederic, pero ahora lo más importante es acabar con esa cosa.",,,,,,,,,,131
+131,,sonidoManiatico.wav,1,1,"[0, 0, 0]",1.25,False,static,0,,132
+132,"Axel - jejejejeje ya veo, interesante, muy divertido, hagámoslo VAMOS!, OYEEE FREDERIC!",,,,,,,,,,133
+133,,sonidoCorrerHumano.wav,1,1,"[0, 0, 0]",4,False,static,0,,134
+134,"Frederic - jajajaja hijo de perra, ya estás bien, muévete ya, dame una mano. Axel - Claro, no te voy a dejar toda esta diversión, jejejejeje, ahora escuchen, Veronica, apoyanos desde atrás, Frederic la distrae mientras yo la apuñalo, el jefe dijo que en el abdomen es débil, JEJEJE. Dios - Axel psicomaniatico del grupo, enfocó su daño en el abdomen mientras Veronica golpeaba en la cabeza a la araña y engañándole con un encantamiento de espejismo, mientras Frederic golpea con gran fuerza desde el otro extremo, con la ayuda de un potenciador de Veronica. Frederic - No te emociones demasiado Axel. Axel - jejejeje!",,,,,,,,,,135
+135,,sonidoHealing.wav,1.2,1,"[0, 0, 0]",1,False,static,0,,136
+136,,sonidoManiatico.wav,1,1,"[0, 0, 0]",1.25,False,static,0,,137
+137,,sonidoAtaqueAraña.wav,1.2,1,"[0, 0, 0]",1,False,static,0,,138
+138,,sonidoVictoria.wav,1,1,"[0, 0, 0]",4,False,static,0,,139
+139,"detener",sonidoGotasCueva.wav,,,,,,,,,140
+140,"Dios - Después de una gran lucha, logran salir con vida del encuentro, salvando de paso al otro compañero atrapado, tomando como recompensa un huevo de araña matriarcal y equipo de aventureros caídos, eliminando el resto de arañas para así lograr salir de la tumba de la seda, una de las mazmorras más engañosas por la que han pasado este grupo de mercenarios. Final Bueno(#2) - 1/2 finales",,,,,,,,,,141
